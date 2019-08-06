@@ -1,6 +1,6 @@
 #pragma once
-#include "/home/pi/Turtle/servo/basicfunc.h"
-#include "/home/pi/Turtle/servo/walk.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
 
 int main() {
 	pca9685 = pca9685_init(0x40);

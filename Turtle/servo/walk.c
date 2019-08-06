@@ -1,7 +1,7 @@
 #pragma once
 
-#include "/home/pi/Turtle/servo/pca9685_wiringpi.h"
-#include "/home/pi/Turtle/servo/basicfunc.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/pca9685_wiringpi.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
 //#define ...
 
