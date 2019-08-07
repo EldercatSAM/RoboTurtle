@@ -10,7 +10,7 @@ void sleep(int x){//if this program runs slow, check here.
 	for(int i=x*1000;i>0;i--);
 }
 
-const int Deviation[ServoNum] = {-12,0,70,50,80,32,12,0,15,90,80,60};//舵机误差 
+const int Deviation[ServoNum] = {-120,-130,-50,-40,-40,-45,-80,-100,-30,-20,-30,-90};//舵机误差 
 int servos[ServoNum] = {1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500};//存储舵机位置，初始化为归中 
 
 void action(int Action_time,int *Moves){
@@ -30,4 +30,14 @@ void action(int Action_time,int *Moves){
 	} 
 }
 
+void adjust(){
+	int x[12]={1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500};
+	int ti = 100;
+	action(ti,x);
+	for(int i=0; i<ServoNum; i++){//更新末位置 
+		servos[i] = x[i];
+	}
+}
+
 #endif
+
