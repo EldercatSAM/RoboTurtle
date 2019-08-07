@@ -6,7 +6,7 @@
 #include <stdio.h>
 int main() {
 	pca9685 = pca9685_init(0x40);
-	int i=3;
+	int i=6;
 	while (i--) {
 		/*for (int i = 500; i <= 2500; i++)
 			pca9685_setmk(pca9685, 0, i);
@@ -16,8 +16,8 @@ int main() {
 		//turn();
 		
 		//Turn_1();
-		turnleft();
-		Move_forward();
+		turnleft(30);
+		//Move_forward();
 		//printf("%d ",i);
 		}
 }
