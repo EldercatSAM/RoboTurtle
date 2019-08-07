@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 
 #include "/home/pi/RoboTurtle/Turtle/servo/pca9685_wiringpi.h"
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
@@ -6,8 +6,8 @@
 //#define ...
 
 void Move_forward(){
-	#ifndef steps
 	#define steps 8
+	//const int steps = 8;
 	int ti[steps] = {150,50,150,50,150,50,150,50};
 	int b[steps][ServoNum] = {
 	 1500,2000,1500,1500,1000,1000,1500,1000,1500,1500,2000,1500,
@@ -20,5 +20,5 @@ void Move_forward(){
 	 1500,1600,1500,1500,1000,1500,1500,1000,1000,1500,2000,1500};
 	for (int i=0;i<steps;i++)
 		action(ti[i],b[i]);
-	#endif
+	//#endif
 }

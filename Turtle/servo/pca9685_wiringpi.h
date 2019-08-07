@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef PCA9685_WIRINGPI_H
 #define PCA9685_WIRINGPI_H
 #include <wiringPi.h>
