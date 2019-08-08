@@ -1,7 +1,7 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/pca9685_wiringpi.h"
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
-#define rotate_parameter 17
+#define rotate_parameter 13.4
 //when this parameter is 16.5 
 //it act like a dumb donkey, why so?
 
@@ -26,6 +26,7 @@ void turnleft(int degree){
 	Moves[4][8]-=rotate_parameter*degree;
 	Moves[1][11]-=rotate_parameter*degree;
 	Moves[2][11]-=rotate_parameter*degree;
+	//printf("%d\n",Moves[5][2]);
 	for (int i=0;i<steps;i++) {
 		action(ti[i],Moves[i]);
 		for (int j=0;j<ServoNum;j++)
@@ -33,3 +34,8 @@ void turnleft(int degree){
 	}
 	//#endif
 }
+/*
+gcc main.c -o main -lwiringPi 
+./main
+
+*/
