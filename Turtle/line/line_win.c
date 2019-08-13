@@ -5,15 +5,18 @@
 #include <stdio.h>
 #include<vector>
 #include<iostream>
+#include<math.h>
 
 using namespace std;
 using namespace cv;
 
 #define ROI_WIDTH 10
-#define N 20
+#define N 15
 #define blockSize 51
 #define constValue 5
 #define maskSize 20
+#define firstPlace 3
+#define Pi 3.141592
 int main(){
 	VideoCapture cap(0);
 	if (!cap.isOpened()){
@@ -138,7 +141,6 @@ int main(){
 		0 0 0 0 0
 		0 0 1 1 0
 		0 0 0 0 0
-		0 0 0 0 0
 		每一个满足模板的3x3，都缩成中心的一个点
 		腐蚀和膨胀都可以可以平滑对象边缘
 
@@ -157,6 +159,7 @@ int main(){
 		*/
 		Rect rec[N];
 		Point2f diff[N];
+		int effectivePoint = 0;
 		for (int i = 0; i < N; i++){
 			if (i == N - 1){
 				rec[i] = Rect(0, 0, binary.cols, ROI_WIDTH);
@@ -175,7 +178,7 @@ int main(){
 			}
 		}
 		//将图像分成N个横条，横条的高度为ROI_WIDTH，宽度为原宽
-
+		double x[N] = { 0 }, y[N] = { 0 };
 		for (int i = 0; i < N; i++){
 			ROI[i] = binary(rec[i]);
 			vector<vector<Point> > contours;//contours的类型是双重的vector
@@ -203,6 +206,7 @@ int main(){
 			vector<Point2f> mc(contours.size());
 
 			for (int j = 0; j < contours.size(); j++){
+				//cout << "contours" << contours.size() << endl;
 				mu[j] = moments(contours[j], false);//矩
 				mc[j] = Point2f(mu[j].m10 / mu[j].m00, mu[j].m01 / mu[j].m00) + diff[i];//“质心”
 				/*
@@ -217,14 +221,28 @@ int main(){
 				Scalar color = Scalar(255);  //任意颜色
 				if (contours.size() == 1){
 					circle(gray, mc[j], 4, color, -1, 8, 0);
-					cout << mc[j].x << "," << mc[j].y << endl;
+					x[i] = mc[j].x; y[i] = mc[j].y;
+					effectivePoint++;
+					//cout << mc[j].x << "," << mc[j].y << endl;
 				}
 			}
 		}
-		cout << endl;
+		double degree = 0;
+		int cnt = 0;
+		for (int i = 0; i < firstPlace || cnt<effectivePoint/3; i++ ) {
+			if (x[i] != 0) {
+				degree += atan(fabs((x[i + 1] - x[i]) / (y[i + 1] - y[i])))*180/Pi;
+				cnt++;
+				
+			}
+			
+		}
+		if (cnt)cout << degree / cnt << endl;
+		//imshow("img", image);
 		imshow("gray", gray);
 		imshow("binary", binary);
-		waitKey(33);
+		waitKey(0);
 	}
 	return 0;
 }
+
