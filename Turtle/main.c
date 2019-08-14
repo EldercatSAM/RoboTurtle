@@ -24,7 +24,7 @@ int main() {
 		else
 			Move_forward();
 		//Turn_1();
-		turnleft(20);
+		//turnleft(20);
 		//Move_forward();
 		//printf("%d ",i);
 		}
