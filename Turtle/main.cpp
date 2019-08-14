@@ -1,8 +1,8 @@
 //#pragma once
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
-#include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
-#include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
-#include "/home/pi/RoboTurtle/Turtle/line/line1.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/walk.cpp"
+#include "/home/pi/RoboTurtle/Turtle/servo/turn.cpp"
+#include "/home/pi/RoboTurtle/Turtle/line/line1.cpp"
 #include <stdio.h>
 
 #define interimDegree 15
@@ -29,4 +29,9 @@ int main() {
 		//printf("%d ",i);
 		}
 }
+
+/*
+g++ main.cpp -o main `pkg-config --cflags --libs opencv` -lwiringPi
+
+*/
 

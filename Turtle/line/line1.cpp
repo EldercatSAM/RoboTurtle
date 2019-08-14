@@ -27,9 +27,9 @@ double CapLine() {
 	Mat image, gray, binary, blur_image;
 	Mat ROI[N];
 
-	int steps = 1;
+	int step = 1;
 	double degrees[5];
-	while (steps--) {
+	while (step--) {
 		cap >> image;
 		cvtColor(image, gray, CV_BGR2GRAY);
 		//ª“∂»Õº
@@ -91,21 +91,21 @@ double CapLine() {
 				}
 			}
 		}
-		degrees[steps] = 0;
+		degrees[step] = 0;
 		int cnt = 0, exclude = 0;
 		for (int i = 0; i < firstPlace || cnt < effectivePoint / 3; i++) {
 			if (x[i] != 0) {
 				double currentdegree = atan(-((x[i + 1] - x[i]) / (y[i + 1] - y[i]))) * 180 / Pi;
-				if (cnt == 1 && degrees[steps] * currentdegree < 0) {
-					degrees[steps] = 0;
+				if (cnt == 1 && degrees[step] * currentdegree < 0) {
+					degrees[step] = 0;
 					cnt--;
 				}
-				if(cnt > 1 && degrees[steps * currentdegree < 0) continue;
-				degrees[steps += currentdegree;
+				if(cnt > 1 && degrees[step] * currentdegree < 0) continue;
+				degrees[step] += currentdegree;
 				cnt++;
 			}
 		}
-		//if (cnt)cout << degrees[steps] / cnt << endl;
+		//if (cnt)cout << degrees[step] / cnt << endl;
 		//imshow("img", image);
 		//imshow("gray", gray);
 		//imshow("binary", binary);

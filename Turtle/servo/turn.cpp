@@ -6,10 +6,9 @@
 //it act like a dumb donkey, why so?
 
 void turnright(int degree){
-
-	#define steps 8
-	int ti[steps] = {50,250,50,250,50,250,50,250};
-	int Moves[steps][ServoNum] = {
+	#define Steps 8
+	int ti[Steps] = {50,250,50,250,50,250,50,250};
+	int Moves[Steps][ServoNum] = {
 		1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,1800,1500,
 		1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
 		1500,2000,1500,1500,1000,1500,1500,1200,1500,1500,2000,1500,
@@ -28,7 +27,7 @@ void turnright(int degree){
 	Moves[2][11]-=rotate_parameter*degree;
 	//printf("%d\n",Moves[5][2]);
 
-	for (int i=0;i<steps;i++) {
+	for (int i=0;i<Steps;i++) {
 		action(ti[i],Moves[i]);
 		for (int j=0;j<ServoNum;j++)
 			servos[j]=Moves[i][j];
@@ -37,10 +36,9 @@ void turnright(int degree){
 }
 
 void turnleft(int degree) {
-
-	#define steps 8
-	int ti[steps] = { 50,250,50,250,50,250,50,250 };
-	int Moves[steps][ServoNum] = {
+	//#define Steps 8
+	int ti[Steps] = { 50,250,50,250,50,250,50,250 };
+	int Moves[Steps][ServoNum] = {
 		1500,1800,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
 		1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
 		1500,2000,1500,1500,1000,1500,1500,1200,1500,1500,2000,1500,
@@ -58,7 +56,7 @@ void turnleft(int degree) {
 	Moves[5][11] += rotate_parameter * degree;
 	Moves[6][11] += rotate_parameter * degree;
 
-	for (int i = 0; i < steps; i++) {
+	for (int i = 0; i < Steps; i++) {
 		action(ti[i], Moves[i]);
 		for (int j = 0; j < ServoNum; j++)
 			servos[j] = Moves[i][j];
