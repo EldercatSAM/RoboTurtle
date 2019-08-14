@@ -32,19 +32,19 @@ double CapLine() {
 	while (step--) {
 		cap >> image;
 		cvtColor(image, gray, CV_BGR2GRAY);
-		//ç°åº¦å›¾
+		//»Ò¶ÈÍ¼
 		pyrDown(gray, gray);
-		//åˆ é™¤å›¾åƒä¸­çš„å¶æ•°è¡Œå’Œåˆ—
+		//É¾³ıÍ¼ÏñÖĞµÄÅ¼ÊıĞĞºÍÁĞ
 		equalizeHist(gray, gray);
-		//ç›´æ–¹å›¾å‡è¡¡åŒ–
+		//Ö±·½Í¼¾ùºâ»¯
 		GaussianBlur(gray, gray, Size(3, 3), 0, 0);
-		//é«˜æ–¯æ»¤æ³¢ å»å™ª
+		//¸ßË¹ÂË²¨ È¥Ôë
 		adaptiveThreshold(gray, binary, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
-		//äºŒå€¼åŒ–
+		//¶şÖµ»¯
 		Mat element_erode = getStructuringElement(MORPH_RECT, Size(maskSize, maskSize));
-		erode(binary, binary, element_erode);//è…èš€
+		erode(binary, binary, element_erode);//¸¯Ê´
 		Mat element_dilate = getStructuringElement(MORPH_RECT, Size(maskSize, maskSize));
-		dilate(binary, binary, element_dilate);//è†¨èƒ€
+		dilate(binary, binary, element_dilate);//ÅòÕÍ
 		Rect rec[N];
 		Point2f diff[N];
 		int effectivePoint = 0;
@@ -65,7 +65,7 @@ double CapLine() {
 				diff[i].y = binary.rows / (N - 1)*(N - 1 - i) - ROI_WIDTH / 2;
 			}
 		}
-		//å°†å›¾åƒåˆ†æˆNä¸ªæ¨ªæ¡ï¼Œæ¨ªæ¡çš„é«˜åº¦ä¸ºROI_WIDTHï¼Œå®½åº¦ä¸ºåŸå®½
+		//½«Í¼Ïñ·Ö³ÉN¸öºáÌõ£¬ºáÌõµÄ¸ß¶ÈÎªROI_WIDTH£¬¿í¶ÈÎªÔ­¿í
 		double x[N] = { 0 }, y[N] = { 0 };
 		for (int i = 0; i < N; i++) {
 			ROI[i] = binary(rec[i]);
@@ -73,16 +73,16 @@ double CapLine() {
 			vector<Vec4i> hierarchy;
 
 			findContours(ROI[i].clone(), contours, hierarchy, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-			//æ£€æµ‹è½®å»“
-			vector<Moments> mu(contours.size());//ç”¨äºè®¡ç®—çŸ©
+			//¼ì²âÂÖÀª
+			vector<Moments> mu(contours.size());//ÓÃÓÚ¼ÆËã¾Ø
 			vector<Point2f> mc(contours.size());
 
 			for (int j = 0; j < contours.size(); j++) {
 				//cout << "contours" << contours.size() << endl;
-				mu[j] = moments(contours[j], false);//çŸ©
+				mu[j] = moments(contours[j], false);//¾Ø
 				mc[j] = Point2f(mu[j].m10 / mu[j].m00, mu[j].m01 / mu[j].m00) + diff[i];
-				//è®¡ç®—è´¨å¿ƒ
-				Scalar color = Scalar(255);  //ä»»æ„é¢œè‰²
+				//¼ÆËãÖÊĞÄ
+				Scalar color = Scalar(255);  //ÈÎÒâÑÕÉ«
 				if (contours.size() == 1) {
 					circle(gray, mc[j], 4, color, -1, 8, 0);
 					x[i] = mc[j].x; y[i] = mc[j].y;
@@ -107,7 +107,7 @@ double CapLine() {
 		}
 		if (cnt)degrees[step] /= cnt;
 		//imshow("img", image);
-		imshow("gray", gray);
+		//imshow("gray", gray);
 		//imshow("binary", binary);
 		waitKey(33);
 	}
