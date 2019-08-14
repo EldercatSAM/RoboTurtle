@@ -9,7 +9,7 @@
 int main() {
 	pca9685 = pca9685_init(0x40);
 	int i=9;
-	while (i--) {
+	while (1) {
 		/*for (int i = 500; i <= 2500; i++)
 			pca9685_setmk(pca9685, 0, i);
 		for (int i = 2500; i >= 500; i--)
@@ -17,6 +17,7 @@ int main() {
 		
 		//turn();
 		double CurrentAngle = CapLine();
+		cout<<CurrentAngle<<endl;
 		if (CurrentAngle >= interimDegree)
 			turnright(CurrentAngle);
 		else if (CurrentAngle <= -interimDegree)

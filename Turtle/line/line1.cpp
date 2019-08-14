@@ -107,7 +107,7 @@ double CapLine() {
 		}
 		//if (cnt)cout << degrees[step] / cnt << endl;
 		//imshow("img", image);
-		//imshow("gray", gray);
+		imshow("gray", gray);
 		//imshow("binary", binary);
 		waitKey(33);
 	}
