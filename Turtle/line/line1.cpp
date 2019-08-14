@@ -16,18 +16,20 @@ using namespace cv;
 #define maskSize 20
 #define firstPlace 3
 #define Pi 3.141592
-int main(){
+
+double CapLine() {
 	VideoCapture cap(0);
-	if (!cap.isOpened()){
+	if (!cap.isOpened()) {
 		cout << "Camera problem" << endl;
 		return -1;
 	}
 
-	Mat image,gray,binary,blur_image;
+	Mat image, gray, binary, blur_image;
 	Mat ROI[N];
 
-	bool stop = false;
-	while (!stop){
+	int steps = 5;
+	double degrees[5];
+	while (steps--) {
 		cap >> image;
 		//灰度图
 		cvtColor(image, gray, CV_BGR2GRAY);
@@ -128,7 +130,7 @@ int main(){
 		1 1 1 1 1
 		0 0 0 0 0
 		将每一个元素1扩展为模板 ones(3,3)
-		
+
 		腐蚀：
 		0 0 1 0 0
 		0 1 1 1 1
@@ -159,18 +161,18 @@ int main(){
 		Rect rec[N];
 		Point2f diff[N];
 		int effectivePoint = 0;
-		for (int i = 0; i < N; i++){
-			if (i == N - 1){
+		for (int i = 0; i < N; i++) {
+			if (i == N - 1) {
 				rec[i] = Rect(0, 0, binary.cols, ROI_WIDTH);
 				diff[i].x = 0;
 				diff[i].y = 0;
 			}
-			else if (i == 0){
+			else if (i == 0) {
 				rec[i] = Rect(0, binary.rows - ROI_WIDTH, binary.cols, ROI_WIDTH);
 				diff[i].x = 0;
 				diff[i].y = binary.rows - ROI_WIDTH;
 			}
-			else{
+			else {
 				rec[i] = Rect(0, binary.rows / (N - 1)*(N - 1 - i) - ROI_WIDTH / 2, binary.cols, ROI_WIDTH);
 				diff[i].x = 0;
 				diff[i].y = binary.rows / (N - 1)*(N - 1 - i) - ROI_WIDTH / 2;
@@ -178,7 +180,7 @@ int main(){
 		}
 		//将图像分成N个横条，横条的高度为ROI_WIDTH，宽度为原宽
 		double x[N] = { 0 }, y[N] = { 0 };
-		for (int i = 0; i < N; i++){
+		for (int i = 0; i < N; i++) {
 			ROI[i] = binary(rec[i]);
 			vector<vector<Point> > contours;//contours的类型是双重的vector
 			vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据，这个暂时没有用
@@ -188,7 +190,7 @@ int main(){
 			contours - 检测到的轮廓，列表list形式，list 中每个元素都是图像中的一个轮廓，这里的每一个元素仍为（点）向量。
 
 			hierarchy -  它和轮廓 contours 个数相同（可选结果），这是一个 ndarray，其中元素个数和轮廓个数相同。每个轮廓 contours[i] 对应 4 个 hierarchy 元素 hierarchy[i][0] ~ hierarchy[i][3]，分别表示后一个轮廓、前一个轮廓、父轮廓、内嵌轮廓的索引编号，如果没有对应项，则该值为负数。（各个轮廓的继承关系。hierarchy也是一个向量，长度和contours相等，每个元素和contours的元素对应。hierarchy的每个元素是一个包含四个整型数的向量）
-			
+
 			mode -  轮廓检索模式
 			CV.RETR_EXTERNAL - 仅检索外轮廓。并为所有轮廓设置层级结构，如 sets hierarchy[i][2]=hierarchy[i][3]=-1
 			CV.RETR_LIST - 检索轮廓但不建立任何层次关系。
@@ -204,7 +206,7 @@ int main(){
 			vector<Moments> mu(contours.size());//用于计算矩
 			vector<Point2f> mc(contours.size());
 
-			for (int j = 0; j < contours.size(); j++){
+			for (int j = 0; j < contours.size(); j++) {
 				//cout << "contours" << contours.size() << endl;
 				mu[j] = moments(contours[j], false);//矩
 				mc[j] = Point2f(mu[j].m10 / mu[j].m00, mu[j].m01 / mu[j].m00) + diff[i];//“质心”
@@ -218,7 +220,7 @@ int main(){
 				*/
 				//cout << mu[j].m10 << " " << mu[j].m01 << " " << mu[j].m00 << endl;
 				Scalar color = Scalar(255);  //任意颜色
-				if (contours.size() == 1){
+				if (contours.size() == 1) {
 					circle(gray, mc[j], 4, color, -1, 8, 0);
 					x[i] = mc[j].x; y[i] = mc[j].y;
 					effectivePoint++;
@@ -226,22 +228,24 @@ int main(){
 				}
 			}
 		}
-		double degree = 0;
+		degrees[steps] = 0;
 		int cnt = 0;
-		for (int i = 0; i < firstPlace || cnt<effectivePoint/3; i++ ) {
+		for (int i = 0; i < firstPlace || cnt < effectivePoint / 3; i++) {
 			if (x[i] != 0) {
-				degree += atan(fabs((x[i + 1] - x[i]) / (y[i + 1] - y[i])))*180/Pi;
+				degrees[steps] += atan(fabs((x[i + 1] - x[i]) / (y[i + 1] - y[i]))) * 180 / Pi;
 				cnt++;
-				
+
 			}
-			
+
 		}
-		if (cnt)cout << degree / cnt << endl;
+		//if (cnt)cout << degrees[steps] / cnt << endl;
 		//imshow("img", image);
-		imshow("gray", gray);
-		imshow("binary", binary);
-		waitKey(0);
+		//imshow("gray", gray);
+		//imshow("binary", binary);
+		waitKey(33);
 	}
-	return 0;
+	double degree = 0;
+	for (int i = 1; i <= 5; i++)degree += degrees[i] / 5;
+	return degree;
 }
 
