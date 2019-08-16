@@ -1,0 +1,16 @@
+I don't know about Windows (never used it), but on a Linux system you just have to create a build directory (in the top source directory)
+
+mkdir build-dir
+
+go inside it
+cd build-dir
+
+then run cmake and point to the parent directory
+cmake ..
+
+and finally run make
+make
+
+Notice that make and cmake are different programs. cmake is a Makefile generator, and the make utility is governed by a Makefile textual file. See cmake & make wikipedia pages.
+
+NB: On Windows, cmake might operate so could need to be used differently. You'll need to read the documentation (like I did for Linux)
