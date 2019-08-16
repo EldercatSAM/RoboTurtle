@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
+project(main)
+add_executable(main main.cpp)
+find_package(OpenCV REQUIRED)
+find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
+target_link_libraries(main ${WIRINGPI_LIBRARIES})
+target_link_libraries(main ${OpenCV_LIBS})

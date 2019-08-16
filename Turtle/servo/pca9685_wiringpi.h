@@ -1,7 +1,9 @@
 
 #ifndef PCA9685_WIRINGPI_H
 #define PCA9685_WIRINGPI_H
-#include <wiringPi.h>
+#include "/home/pi/RoboTurtle/Turtle/servo/wiringPiI2C.h"
+//#include <wiringPi.h>
+#include <unistd.h>
 
 
 #define PCA9685_SUBADR1 0x2
@@ -61,7 +63,7 @@ int pca9685_init(unsigned char addr)	// addr是7位的i2c从机地址，返回�
 		wiringPiI2CWriteReg8(pca9685, PCA9685_PRESCALE, prescale);
 		oldmode &= 0xef;	//清除sleep位
 		wiringPiI2CWriteReg8(pca9685, PCA9685_MODE1, oldmode);
-		delay(0.005);
+		sleep(0.005);
 		wiringPiI2CWriteReg8(pca9685, PCA9685_MODE1, oldmode | 0xa1);
 	}
 	return pca9685;

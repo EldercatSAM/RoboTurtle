@@ -1,11 +1,12 @@
-//#pragma once
 
 #include "/home/pi/RoboTurtle/Turtle/servo/pca9685_wiringpi.h"
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
+
 //#define ...
 
 void Move_forward(){
+	
 	#define Steps 8
 	//const int Steps = 8;
 	int ti[Steps] = {150,50,150,50,150,50,150,50};
@@ -18,7 +19,9 @@ void Move_forward(){
 	 1500,2000,2000,1500,1000,1500,1500,1400,1500,1500,2000,1500,
 	 1500,2000,2000,1500,1000,1500,1500,1000,1000,1500,2000,1500,
 	 1500,1600,1500,1500,1000,1500,1500,1000,1000,1500,2000,1500};
-	for (int i=0;i<Steps;i++)
-		action(ti[i],b[i]);
+	for (int i=0;i<Steps;i++){
+		action(ti[i],b[i]);//std::cout<<"cylssz"<<std::endl;
+	}
+		
 	//#endif
 }

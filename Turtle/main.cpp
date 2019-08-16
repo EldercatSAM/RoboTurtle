@@ -1,7 +1,10 @@
 //#pragma once
+
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
-#include "/home/pi/RoboTurtle/Turtle/servo/walk.cpp"
-#include "/home/pi/RoboTurtle/Turtle/servo/turn.cpp"
+#include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
+
+
 #include "/home/pi/RoboTurtle/Turtle/line/line1.cpp"
 #include <stdio.h>
 
@@ -17,6 +20,7 @@ int main() {
 		
 		//turn();
 		double CurrentAngle = CapLine();
+		Move_forward();
 		cout<<CurrentAngle<<endl;
 		if (CurrentAngle >= interimDegree)
 			turnright(CurrentAngle);
@@ -32,7 +36,8 @@ int main() {
 }
 
 /*
-g++ main.cpp -o main `pkg-config --cflags --libs opencv` -lwiringPi
+cd RoboTurtle/Turtle
+g++ -o main main.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 */
 
