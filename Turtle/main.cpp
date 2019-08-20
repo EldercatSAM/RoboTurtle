@@ -8,7 +8,7 @@
 #include "/home/pi/RoboTurtle/Turtle/line/line1.cpp"
 #include <stdio.h>
 
-#define interimDegree 15
+#define interimDegree 14
 int main() {
 	pca9685 = pca9685_init(0x40);
 	int i=9;
@@ -19,15 +19,26 @@ int main() {
 			pca9685_setmk(pca9685, 0, i);*/
 		
 		//turn();
+		stay_Middle();
+		sleep(0.8);
 		double CurrentAngle = CapLine();
-		Move_forward();
+		//if (CurrentAngle == -999) break;
+		CurrentAngle = int(CurrentAngle);
+		//waitKey(0);
+		//Move_forward();
 		cout<<CurrentAngle<<endl;
-		if (CurrentAngle >= interimDegree)
+		if (CurrentAngle >= interimDegree){
+			cout<<"turnright "<<CurrentAngle<<" degrees"<<endl;
 			turnright(CurrentAngle);
-		else if (CurrentAngle <= -interimDegree)
+		}
+		else if (CurrentAngle <= -interimDegree){
+			cout<<"turnleft "<<CurrentAngle<<" degrees"<<endl;
 			turnleft(CurrentAngle);
-		else
+		}
+		else{
+			cout<<"Moveforward"<<endl;
 			Move_forward();
+		}
 		//Turn_1();
 		//turnleft(20);
 		//Move_forward();

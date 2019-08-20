@@ -4,19 +4,14 @@
 
 int main() {
 	pca9685 = pca9685_init(0x40);
-	int i=8;
+	int i=4;
 	while (i--) {
-		for (int i = 500; i <= 2500; i++)
-			pca9685_setmk(pca9685, 0, i);
-		for (int i = 2500; i >= 500; i--)
-			pca9685_setmk(pca9685, 0, i);
-		
-		//turn();
-		//adjust();
+		Move_forward();
+		sleep(1);
 		}
 }
 /*
 cd RoboTurtle/Turtle
-g++ -o test test.cpp `
+g++ -o test test.cpp -lwiringPi
 
 */

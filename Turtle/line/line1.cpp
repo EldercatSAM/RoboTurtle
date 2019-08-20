@@ -13,15 +13,32 @@ using namespace cv;
 #define N 15
 #define blockSize 51
 #define constValue 5
-#define maskSize 20
+#define Open_size 5
+#define Close_size 7
 #define firstPlace 3
 #define Pi 3.141592
+#define parameter 1.6
+void rgb2bin(Mat& rgb, Mat& bin) {
+	cvtColor(rgb, bin, CV_BGR2GRAY);
+	int rowNumber = rgb.rows;
+	int colNumber = rgb.cols;
+	for (int i = 0; i < rowNumber; i++)//��
+	{
+		for (int j = 0; j < colNumber; j++)//��
+		{
+			if (rgb.at<Vec3b>(i, j)[2] * parameter > (rgb.at<Vec3b>(i, j)[0] + rgb.at<Vec3b>(i, j)[1]))
+				bin.at<uchar>(i, j) = 255;
+			else
+				bin.at<uchar>(i, j) = 0;
+		}
+	}
+}
 
 double CapLine() {
 	VideoCapture cap(0);
 	if (!cap.isOpened()) {
 		cout << "Camera problem" << endl;
-		return -1;
+		return -999;
 	}
 
 	Mat image, gray, binary, blur_image;
@@ -32,7 +49,7 @@ double CapLine() {
 	while (step--) {
 		cap >> image;
 		cvtColor(image, gray, CV_BGR2GRAY);
-		//灰度图
+		/*//灰度图
 		pyrDown(gray, gray);
 		//删除图像中的偶数行和列
 		equalizeHist(gray, gray);
@@ -40,11 +57,15 @@ double CapLine() {
 		GaussianBlur(gray, gray, Size(3, 3), 0, 0);
 		//高斯滤波 去噪
 		adaptiveThreshold(gray, binary, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
-		//二值化
-		Mat element_erode = getStructuringElement(MORPH_RECT, Size(maskSize, maskSize));
-		erode(binary, binary, element_erode);//腐蚀
-		Mat element_dilate = getStructuringElement(MORPH_RECT, Size(maskSize, maskSize));
-		dilate(binary, binary, element_dilate);//膨胀
+		//二值化*/
+		rgb2bin(image, binary);
+		Mat element1 = getStructuringElement(MORPH_RECT, Size(Open_size, Open_size));
+		erode(binary, binary, element1);//腐蚀
+		dilate(binary, binary, element1);
+		Mat element2 = getStructuringElement(MORPH_RECT, Size(Close_size,Close_size));
+		dilate(binary, binary, element2);//膨胀
+		erode(binary, binary, element2);
+		
 		Rect rec[N];
 		Point2f diff[N];
 		int effectivePoint = 0;
