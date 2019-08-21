@@ -1,4 +1,3 @@
-
 #ifndef BASICFUNC_H
 #define BASICFUNC_H
 

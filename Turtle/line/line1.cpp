@@ -16,22 +16,41 @@ using namespace cv;
 #define Open_size 5
 #define Close_size 7
 #define firstPlace 3
-#define Pi 3.141592
-#define parameter 1.6
+#define Pi 3.14159
+#define ColorParameter 1.6 
+#define SearchFactor 0.3
+
 void rgb2bin(Mat& rgb, Mat& bin) {
 	cvtColor(rgb, bin, CV_BGR2GRAY);
 	int rowNumber = rgb.rows;
 	int colNumber = rgb.cols;
+	
 	for (int i = 0; i < rowNumber; i++)//��
 	{
 		for (int j = 0; j < colNumber; j++)//��
 		{
-			if (rgb.at<Vec3b>(i, j)[2] * parameter > (rgb.at<Vec3b>(i, j)[0] + rgb.at<Vec3b>(i, j)[1]))
-				bin.at<uchar>(i, j) = 255;
+			if (rgb.at<Vec3b>(i, j)[2] * ColorParameter > (rgb.at<Vec3b>(i, j)[0] + rgb.at<Vec3b>(i, j)[1]))
+				bin.at<uchar>(i, j) = 255;//Red
 			else
 				bin.at<uchar>(i, j) = 0;
 		}
 	}
+}
+
+int biasJudge(Mat& bin) {
+	int rowNumber = bin.rows - 5;// avoid the border
+	int colNumber = bin.cols;
+	for (int i = 1; i <= 5; i++) {
+		if (bin.at<uchar>(rowNumber, colNUmber / 2 + i) == 255 || bin.at<uchar>(rowNumber, colNUmber / 2 - i) == 255)
+			return 0;
+	}
+	for (int i = 5; i <= colNumber * SearchFactor; i++) {
+		if (bin.at<uchar>(rowNumber, colNUmber / 2 + i) == 255)
+			return 1;
+		if (bin.at<uchar>(rowNumber, colNUmber / 2 - i) == 255)
+			return -1;
+	}
+	return 3;//Can't find a red line in the field
 }
 
 double CapLine() {
@@ -49,9 +68,9 @@ double CapLine() {
 	while (step--) {
 		cap >> image;
 		cvtColor(image, gray, CV_BGR2GRAY);
-		/*//灰度图
+		/*//灰度�?
 		pyrDown(gray, gray);
-		//删除图像中的偶数行和列
+		//删除图像中的偶数行和�?
 		equalizeHist(gray, gray);
 		//直方图均衡化
 		GaussianBlur(gray, gray, Size(3, 3), 0, 0);
@@ -59,6 +78,13 @@ double CapLine() {
 		adaptiveThreshold(gray, binary, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
 		//二值化*/
 		rgb2bin(image, binary);
+		int judge = biasJudge(binary);
+		if (judge == 1)
+			return 199909; //
+		else if (judge == -1)
+			return 200012;
+		else if (judge == 3)
+			return 200000;
 		Mat element1 = getStructuringElement(MORPH_RECT, Size(Open_size, Open_size));
 		erode(binary, binary, element1);//腐蚀
 		dilate(binary, binary, element1);
@@ -94,13 +120,13 @@ double CapLine() {
 			vector<Vec4i> hierarchy;
 
 			findContours(ROI[i].clone(), contours, hierarchy, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-			//检测轮廓
-			vector<Moments> mu(contours.size());//用于计算矩
+			//检测轮�?
+			vector<Moments> mu(contours.size());//用于计算�?
 			vector<Point2f> mc(contours.size());
 
 			for (int j = 0; j < contours.size(); j++) {
 				//cout << "contours" << contours.size() << endl;
-				mu[j] = moments(contours[j], false);//矩
+				mu[j] = moments(contours[j], false);//�?
 				mc[j] = Point2f(mu[j].m10 / mu[j].m00, mu[j].m01 / mu[j].m00) + diff[i];
 				//计算质心
 				Scalar color = Scalar(255);  //任意颜色
