@@ -6,7 +6,7 @@ int main() {
 	pca9685 = pca9685_init(0x40);
 	RoboTurtle Sam;
 	while (1) {
-		sam.takeAction();
+		Sam.takeAction();
 	}
 /*
 	int i=9;

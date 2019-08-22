@@ -41,13 +41,13 @@ int biasJudge(Mat& bin) {
 	int rowNumber = bin.rows - 5;// avoid the border
 	int colNumber = bin.cols;
 	for (int i = 1; i <= 5; i++) {
-		if (bin.at<uchar>(rowNumber, colNUmber / 2 + i) == 255 || bin.at<uchar>(rowNumber, colNUmber / 2 - i) == 255)
+		if (bin.at<uchar>(rowNumber, colNumber / 2 + i) == 255 || bin.at<uchar>(rowNumber, colNumber / 2 - i) == 255)
 			return 0;
 	}
 	for (int i = 5; i <= colNumber * SearchFactor; i++) {
-		if (bin.at<uchar>(rowNumber, colNUmber / 2 + i) == 255)
+		if (bin.at<uchar>(rowNumber, colNumber / 2 + i) == 255)
 			return 1;
-		if (bin.at<uchar>(rowNumber, colNUmber / 2 - i) == 255)
+		if (bin.at<uchar>(rowNumber, colNumber / 2 - i) == 255)
 			return -1;
 	}
 	return 3;//Can't find a red line in the field

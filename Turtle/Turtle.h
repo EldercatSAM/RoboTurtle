@@ -40,7 +40,7 @@ void RoboTurtle::takeAction() {
 			break;
 		}
 		case LINE_DETECT: {
-			double lineDetect = Capline();
+			double lineDetect = CapLine();
 			if ((lineDetect > -interimDegree && lineDetect < 0) || (lineDetect > 0 && lineDetect < interimDegree)) {
 				status = MOVE_FORWARD;
 				break;
@@ -87,3 +87,5 @@ void RoboTurtle::takeAction() {
 
 	}
 }
+
+#endif
