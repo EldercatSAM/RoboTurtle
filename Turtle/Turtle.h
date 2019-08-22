@@ -2,13 +2,14 @@
 #ifndef TURTLE_H
 #define TURTLE_H
 
-#include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
-#include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
-#include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/walk.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/turn.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/cross_country.h"
+#include "/home/pi/RoboTurtle/Turtle/line/line.h"
 
-#include "/home/pi/RoboTurtle/Turtle/line/line1.cpp"
 #define interimDegree 14
 #define sleeptime 0.8
+
 typedef enum {
 	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
