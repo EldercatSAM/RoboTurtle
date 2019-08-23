@@ -134,7 +134,7 @@ double CapLine() {
 		//imshow("binary", binary);
 		waitKey(33);
 	}
-	waitKey(0);
+	//waitKey(0);
 	if (judge == 1)
 		return 199909; //
 	else if (judge == -1)
