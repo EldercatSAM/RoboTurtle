@@ -68,6 +68,10 @@ void RoboTurtle::takeAction() {
 				status = MOVE_LEFT;
 				break;
 			}
+			else if (lineDetect == 200000) {
+				status = MOVE_BACKWARD;
+				break;
+			}
 			break;
 		}
 		case MOVE_RIGHT: {
@@ -94,7 +98,12 @@ void RoboTurtle::takeAction() {
 			status = STAY;
 			break;
 		}
-
+		case MOVE_BACKWARD: {
+			cout<<"MOVE_BACKWARD";
+			Move_backward();
+			status = STAY;
+			break;
+		}
 	}
 }
 
