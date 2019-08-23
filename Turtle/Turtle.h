@@ -2,10 +2,10 @@
 #ifndef TURTLE_H
 #define TURTLE_H
 
-#include "/home/pi/RoboTurtle/Turtle/servo/walk.h"
-#include "/home/pi/RoboTurtle/Turtle/servo/turn.h"
-#include "/home/pi/RoboTurtle/Turtle/servo/cross_country.h"
-#include "/home/pi/RoboTurtle/Turtle/line/line.h"
+#include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
+#include "/home/pi/RoboTurtle/Turtle/servo/cross_country.c"
+#include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
 
 #define interimDegree 14
 #define sleeptime 0.8
@@ -32,6 +32,7 @@ void RoboTurtle::takeAction() {
 		case STAY: {
 			stay_Middle();
 			sleep(sleeptime);
+			
 			status = LINE_DETECT;
 			break;
 		}
@@ -64,6 +65,7 @@ void RoboTurtle::takeAction() {
 				status = MOVE_LEFT;
 				break;
 			}
+			break;
 		}
 		case MOVE_RIGHT: {
 			Move_right();
@@ -81,7 +83,7 @@ void RoboTurtle::takeAction() {
 			break;
 		}
 		case TURN_LEFT: {
-			Turn_left(int(Angle));
+			Turn_left(int(-Angle));
 			status = STAY;
 			break;
 		}

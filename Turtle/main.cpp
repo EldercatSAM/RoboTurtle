@@ -2,6 +2,11 @@
 #include "/home/pi/RoboTurtle/Turtle/Turtle.h"
 #include <stdio.h>
 
+/*
+cd RoboTurtle/Turtle
+g++ -o main main.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
+
+*/
 int main() {
 	pca9685 = pca9685_init(0x40);
 	RoboTurtle Sam;
@@ -45,9 +50,4 @@ int main() {
 */
 }
 
-/*
-cd RoboTurtle/Turtle
-g++ -o main main.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
-
-*/
 

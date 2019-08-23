@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WALK_H
 #define WALK_H 
 

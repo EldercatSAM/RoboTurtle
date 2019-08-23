@@ -1,3 +1,4 @@
+#pragma once
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
 #define rotate_parameter 13.4

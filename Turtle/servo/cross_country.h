@@ -6,3 +6,5 @@
 
 void Up_platform();
 void Down_platform();
+
+#endif

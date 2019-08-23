@@ -16,12 +16,13 @@ using namespace cv;
 #define N 15
 #define blockSize 51
 #define constValue 5
-#define Open_size 5
-#define Close_size 7
+#define Open_size 12
+#define Close_size 8
 #define firstPlace 3
 #define Pi 3.14159
 #define ColorParameter 1.6 
-#define SearchFactor 0.3
+#define biasDistance 90
+#define SearchFactor 0.4
 
 void rgb2bin(Mat& rgb, Mat& bin);
 int biasJudge(Mat& bin);

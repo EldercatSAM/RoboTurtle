@@ -20,14 +20,14 @@ void rgb2bin(Mat& rgb, Mat& bin) {
 int biasJudge(Mat& bin) {
 	int rowNumber = bin.rows - 5;// avoid the border
 	int colNumber = bin.cols;
-	for (int i = 1; i <= 5; i++) {
-		if (bin.at<uchar>(rowNumber, colNumber / 2 + i) == 255 || bin.at<uchar>(rowNumber, colNumber / 2 - i) == 255)
+	for (int i = 1; i <= biasDistance; i++) {
+		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255 || bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
 			return 0;
 	}
-	for (int i = 5; i <= colNumber * SearchFactor; i++) {
-		if (bin.at<uchar>(rowNumber, colNumber / 2 + i) == 255)
+	for (int i = biasDistance; i <= colNumber * SearchFactor; i++) {
+		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255)
 			return 1;
-		if (bin.at<uchar>(rowNumber, colNumber / 2 - i) == 255)
+		if (bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
 			return -1;
 	}
 	return 3;//Can't find a red line in the field
@@ -42,7 +42,7 @@ double CapLine() {
 
 	Mat image, gray, binary, blur_image;
 	Mat ROI[N];
-
+	int judge = 0;
 	int step = 1;
 	double degrees;
 	while (step--) {
@@ -58,20 +58,16 @@ double CapLine() {
 		adaptiveThreshold(gray, binary, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);
 		//二值化*/
 		rgb2bin(image, binary);
-		int judge = biasJudge(binary);
-		if (judge == 1)
-			return 199909; //
-		else if (judge == -1)
-			return 200012;
-		else if (judge == 3)
-			return 200000;
+		
+		
 		Mat element1 = getStructuringElement(MORPH_RECT, Size(Open_size, Open_size));
 		erode(binary, binary, element1);//腐蚀
 		dilate(binary, binary, element1);
 		Mat element2 = getStructuringElement(MORPH_RECT, Size(Close_size,Close_size));
 		dilate(binary, binary, element2);//膨胀
 		erode(binary, binary, element2);
-		
+		imshow("binary", binary);
+		judge = biasJudge(binary);
 		Rect rec[N];
 		Point2f diff[N];
 		int effectivePoint = 0;
@@ -138,6 +134,13 @@ double CapLine() {
 		//imshow("binary", binary);
 		waitKey(33);
 	}
+	waitKey(0);
+	if (judge == 1)
+		return 199909; //
+	else if (judge == -1)
+		return 200012;
+	else if (judge == 3)
+		return 200000;
 	return degrees;
 }
 
