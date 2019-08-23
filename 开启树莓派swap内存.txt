@@ -1,0 +1,23 @@
+cd /var
+
+
+# 先关闭
+
+sudo swapoff /var/swap
+
+
+# 设置大小1M * 1024 = 1G
+
+sudo dd if=/dev/zero of=swap bs=1M count=512
+# 格式化
+
+sudo mkswap /var/swap
+
+
+#开启
+
+sudo swapon /var/swap
+#查看当前已生效的swap
+swapon -s
+# 查看当前swap使用情况
+free -m
