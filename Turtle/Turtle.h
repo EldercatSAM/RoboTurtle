@@ -7,7 +7,7 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/cross_country.c"
 #include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
 
-#define interimDegree 14
+#define interimDegree 20
 #define sleeptime 0.3
 
 typedef enum {
@@ -31,7 +31,7 @@ void RoboTurtle::takeAction() {
 	switch (status) {
 		case STAY: {
 			stay_Middle();
-			sleep(sleeptime);
+			//sleep(sleeptime);
 			cout<<"STAYING"<<endl;
 			status = LINE_DETECT;
 			break;
@@ -47,6 +47,7 @@ void RoboTurtle::takeAction() {
 			cout<<"DETECTING_LINE"<<endl;
 			double lineDetect = CapLine();
 			if ((lineDetect > -interimDegree && lineDetect < 0) || (lineDetect > 0 && lineDetect < interimDegree)) {
+				Angle = lineDetect;
 				status = MOVE_FORWARD;
 				break;
 			}
@@ -69,7 +70,18 @@ void RoboTurtle::takeAction() {
 				break;
 			}
 			else if (lineDetect == 200000) {
-				status = MOVE_BACKWARD;
+				if (Angle< -interimDegree && Angle >= -90) {
+					status = TURN_LEFT;
+					//Angle = lineDetect;
+					break;
+				}
+				else if (Angle > interimDegree && Angle <= 90) {
+					status = TURN_RIGHT;
+					//Angle = lineDetect;
+					break;
+				}
+				else
+					status = MOVE_BACKWARD;
 				break;
 			}
 			break;
