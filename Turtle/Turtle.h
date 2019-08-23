@@ -32,16 +32,18 @@ void RoboTurtle::takeAction() {
 		case STAY: {
 			stay_Middle();
 			sleep(sleeptime);
-			
+			cout<<"STAYING"<<endl;
 			status = LINE_DETECT;
 			break;
 		}
 		case MOVE_FORWARD: {
 			Move_forward();
+			cout<<"MOVE_FORWARD"<<endl;
 			status = STAY;
 			break;
 		}
 		case LINE_DETECT: {
+			cout<<"DETECTING_LINE"<<endl;
 			double lineDetect = CapLine();
 			if ((lineDetect > -interimDegree && lineDetect < 0) || (lineDetect > 0 && lineDetect < interimDegree)) {
 				status = MOVE_FORWARD;
@@ -68,21 +70,25 @@ void RoboTurtle::takeAction() {
 			break;
 		}
 		case MOVE_RIGHT: {
+			cout<<"MOVE_RIGHT"<<endl;
 			Move_right();
 			status = STAY;
 			break;
 		}
 		case MOVE_LEFT: {
+			cout<<"MOVE_LEFT"<<endl;
 			Move_left();
 			status = STAY;
 			break;
 		}
 		case TURN_RIGHT: {
+			cout<<"TURN_RIGHT "<<Angle<<" DEGREES"<<endl;
 			Turn_right(int(Angle));
 			status = STAY;
 			break;
 		}
 		case TURN_LEFT: {
+			cout<<"TURN_LEFT "<<Angle<<" DEGREES"<<endl;
 			Turn_left(int(-Angle));
 			status = STAY;
 			break;
