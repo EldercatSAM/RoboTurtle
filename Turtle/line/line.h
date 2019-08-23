@@ -21,8 +21,9 @@ using namespace cv;
 #define firstPlace 3
 #define Pi 3.14159
 #define ColorParameter 1.6 
-#define biasDistance 90
+#define biasDistance 120
 #define SearchFactor 0.4
+#define boarderWidth 20
 
 void rgb2bin(Mat& rgb, Mat& bin);
 int biasJudge(Mat& bin);

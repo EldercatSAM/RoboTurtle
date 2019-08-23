@@ -8,7 +8,7 @@
 #include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
 
 #define interimDegree 14
-#define sleeptime 0.8
+#define sleeptime 0.3
 
 typedef enum {
 	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
@@ -37,8 +37,9 @@ void RoboTurtle::takeAction() {
 			break;
 		}
 		case MOVE_FORWARD: {
-			Move_forward();
 			cout<<"MOVE_FORWARD"<<endl;
+			Move_forward();
+			Move_forward();//Two steps at once-.-
 			status = STAY;
 			break;
 		}

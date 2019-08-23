@@ -18,13 +18,13 @@ void rgb2bin(Mat& rgb, Mat& bin) {
 }
 
 int biasJudge(Mat& bin) {
-	int rowNumber = bin.rows - 5;// avoid the border
+	int rowNumber = bin.rows - boarderWidth;// avoid the border
 	int colNumber = bin.cols;
 	for (int i = 1; i <= biasDistance; i++) {
 		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255 || bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
 			return 0;
 	}
-	for (int i = biasDistance; i <= colNumber * SearchFactor; i++) {
+	for (int i = biasDistance; i <= colNumber; i++) {
 		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255)
 			return 1;
 		if (bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
