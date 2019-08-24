@@ -1,6 +1,7 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/turn.h"
 
 void Turn_right(int degree){
+	degree += correct_degree;
 	#define TR_Steps 8
 	int ti[TR_Steps] = {50,150,50,150,50,150,50,150};
 	int Moves[TR_Steps][ServoNum] = {
@@ -26,6 +27,7 @@ void Turn_right(int degree){
 }
 
 void Turn_left(int degree) {
+	degree += correct_degree;
 	#define TL_Steps 8
 	int ti[TL_Steps] = { 50,150,50,150,50,150,50,150 };
 	int Moves[TL_Steps][ServoNum] = {

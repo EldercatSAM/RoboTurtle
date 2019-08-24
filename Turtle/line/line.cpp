@@ -30,6 +30,12 @@ int biasJudge(Mat& bin) {
 		if (bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
 			return -1;
 	}
+	for (int i = biasDistance; i <= colNumber; i++) {
+		if (bin.at<uchar>(rowNumber / 2, colNumber / 2 + i ) == 255)
+			return 1;
+		if (bin.at<uchar>(rowNumber / 2, colNumber / 2 - i ) == 255)
+			return -1;
+	}
 	return 3;//Can't find a red line in the field
 }
 
@@ -118,7 +124,8 @@ double CapLine() {
 	for (int i = 0; i < k - 1; i++) {
 		double currentdegree = atan(-((x[i + 1] - x[i]) / (y[i + 1] - y[i]))) * 180 / Pi;
 		Degrees[i] = currentdegree;
-		degrees += currentdegree / k;
+		if(i < (k-1)/2)
+			degrees += currentdegree / (k-1) *2;
 		/*if (cnt == 1 && degrees * currentdegree < 0) { //the first three points lean on different side
 			degrees = 0;
 			cnt--;
@@ -127,7 +134,9 @@ double CapLine() {
 		degrees += currentdegree;
 		cnt++;*/
 	}
-	if (Degrees[k - 1] > curveParameter * Degrees[0]) onCurve = true;
+	cout<< "degrees[0] = "<<Degrees[0]<<endl;
+	cout<< "degrees[k-3] = "<<Degrees[k-3]<<endl;
+	if ((fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) && fabs(Degrees[0]) > T_interimDegree) onCurve = true;
 	imshow("gray", gray);
 	//imshow("binary", binary);
 	waitKey(33);
@@ -142,6 +151,6 @@ double CapLine() {
 	if (!onCurve)
 		return degrees;
 	else
-		return degrees + 300000;
+		return Degrees[k-2]  + 300000;
 }
 

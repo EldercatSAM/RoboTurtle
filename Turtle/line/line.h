@@ -20,11 +20,12 @@ using namespace cv;
 #define Close_size 8 // Rect size of close operate
 #define Pi 3.14159
 #define ColorParameter 1.6 // Threshold for RED
-#define biasDistance 120 //Consider how long as off-center
+#define biasDistance 100 //Consider how long as off-center
 #define SearchFactor 0.4 //Range of line-searching
 #define boarderWidth 20 //Search the line from coordination above this value
-#define interimDegree 20 //The threshold value to turn
-#define curveParameter 1.8 // If the last degree is bigger then the first one times this parameter, I judge the robot is on curve
+#define interimDegree 18 //The threshold value to turn when walking on line 
+#define T_interimDegree 12.5 //The threshold value to turn when walking on curve 
+#define curveParameter 2.1 // If the last degree is bigger then the first one times this parameter, I judge the robot is on curve
 
 void rgb2bin(Mat& rgb, Mat& bin);
 int biasJudge(Mat& bin);
