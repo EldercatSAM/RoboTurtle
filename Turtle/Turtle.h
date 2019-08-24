@@ -7,7 +7,6 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/cross_country.c"
 #include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
 
-#define interimDegree 20
 #define sleeptime 0.3
 
 typedef enum {
@@ -18,12 +17,17 @@ typedef enum {
 	HIGH, LOW, MEDIUM
 }Gesture;
 
+typedef enum {
+	ONLINE, ONCURVE_BEGIN, ONCURVE_MIDDLE
+}Place;
+
 struct RoboTurtle {
 	Status status = STAY;
 	Gesture gesture;
+	Place place;
 
+	int walkStep = 0;
 	double Angle = 0;
-
 	void takeAction();
 };
 
@@ -83,6 +87,9 @@ void RoboTurtle::takeAction() {
 				else
 					status = MOVE_BACKWARD;
 				break;
+			}
+			else if (lineDeteck > 250000) {
+				
 			}
 			break;
 		}
