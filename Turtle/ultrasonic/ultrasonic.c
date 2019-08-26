@@ -1,8 +1,4 @@
-#include <wiringPi.h>  
-#include <stdio.h>  
-#include <sys/time.h>  
-#define Trig    4  
-#define Echo    5  
+#include "/home/pi/RoboTurtle/Turtle/ultrasonic/ultrasonic.h"
   
 void ultraInit(void)  
 {  
@@ -49,7 +45,7 @@ float disMeasure(void)
   
     return dis;  
 }  
-  
+/*
 int main(void)  
 {  
     float dis;  
@@ -68,4 +64,4 @@ int main(void)
     }  
   
     return 0;  
-}
+}*/

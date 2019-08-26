@@ -39,7 +39,8 @@ int biasJudge(Mat& bin) {
 	return 3;//Can't find a red line in the field
 }
 
-double CapLine() {
+Data CapLine() {
+	Data Sam;
 	VideoCapture cap(0);
 	if (!cap.isOpened()) {
 		cout << "Camera problem" << endl;
@@ -120,37 +121,38 @@ double CapLine() {
 		}
 	}
 	int cnt = 0, exclude = 0;
-	double degrees = 0;
+
 	for (int i = 0; i < k - 1; i++) {
 		double currentdegree = atan(-((x[i + 1] - x[i]) / (y[i + 1] - y[i]))) * 180 / Pi;
 		Degrees[i] = currentdegree;
 		if(i < (k-1)/2)
-			degrees += currentdegree / (k-1) *2;
-		/*if (cnt == 1 && degrees * currentdegree < 0) { //the first three points lean on different side
-			degrees = 0;
+			Sam.degrees += currentdegree / (k-1) *2;
+		/*if (cnt == 1 && Sam.degrees * currentdegree < 0) { //the first three points lean on different side
+			Sam.degrees = 0;
 			cnt--;
 		}
-		if(cnt > 1 && degrees * currentdegree < 0) continue;
-		degrees += currentdegree;
+		if(cnt > 1 && Sam.degrees * currentdegree < 0) continue;
+		Sam.degrees += currentdegree;
 		cnt++;*/
 	}
+	Sam.distance = sqrt(pow(x[k-1]-x[0],2)+pow(y[k-1]-y[0],2));
 	cout<< "degrees[0] = "<<Degrees[0]<<endl;
 	cout<< "degrees[k-3] = "<<Degrees[k-3]<<endl;
+	cout<< "distance = " << Sam.distance << endl;
 	if ((fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) && fabs(Degrees[0]) > T_interimDegree) onCurve = true;
 	imshow("gray", gray);
 	//imshow("binary", binary);
 	waitKey(33);
 	//waitKey(0);
 	if (judge == 1)
-		return 199909; //
+		Sam.degrees = 199909; //
 	else if (judge == -1)
-		return 200012;
+		Sam.degrees = 200012;
 	else if (judge == 3)
-		return 200000;
+		Sam.degrees = 200000;
 
-	if (!onCurve)
-		return degrees;
-	else
-		return Degrees[k-2]  + 300000;
+	if (onCurve)
+		Sam.degrees = Degrees[k-2]  + 300000;
+	return Sam;
 }
 

@@ -6,6 +6,7 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
 #include "/home/pi/RoboTurtle/Turtle/servo/cross_country.c"
 #include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
+#include "/home/pi/RoboTurtle/Turtle/ultrasonic/ultrasonic.c"
 
 #define sleeptime 0.3
 #define turnTimes 2
@@ -28,6 +29,7 @@ struct RoboTurtle {
 	Place place = ONLINE;
 	bool takeTurn = false;
 	int step_cnt = 0;
+	Data turtle;
 
 	int walkStep = 0;
 	double Angle = 0;
@@ -91,9 +93,10 @@ void RoboTurtle::takeAction() {
 	case LINE_DETECT: {
 		stay_Middle();
 		cout << "DETECTING_LINE" << endl;
-		double lineDetect = CapLine();
-		if ((lineDetect > -interimDegree && lineDetect < 0) || (lineDetect > 0 && lineDetect < interimDegree)) {
-			Angle = lineDetect;
+		turtle = CapLine();
+		double turtle.degrees = turtle.degrees;
+		if ((turtle.degrees < -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
+			Angle = turtle.degrees;
 			step_cnt++;
 			if(step_cnt > 2){
 				place = ONLINE;
@@ -102,63 +105,63 @@ void RoboTurtle::takeAction() {
 			status = STAY;
 			break;
 		}
-		else if (lineDetect < -interimDegree && lineDetect >= -90) {
+		else if (turtle.degrees < -interimDegree && turtle.degrees >= -90) {
 			place = ONCURVE_BEGIN;
 			status = TURN_LEFT;
-			Angle = lineDetect;
+			Angle = turtle.degrees;
 			break;
 		}
-		else if (lineDetect > interimDegree && lineDetect <= 90) {
+		else if (turtle.degrees > interimDegree && turtle.degrees <= 90) {
 			place = ONCURVE_BEGIN;
 			status = TURN_RIGHT;
-			Angle = lineDetect;
+			Angle = turtle.degrees;
 			break;
 		}
-		else if (lineDetect == 199909) {
+		else if (turtle.degrees == 199909) {
 			status = MOVE_RIGHT;
 			break;
 		}
-		else if (lineDetect == 200012) {
+		else if (turtle.degrees == 200012) {
 			status = MOVE_LEFT;
 			break;
 		}
-		else if (lineDetect == 200000) {
+		else if (turtle.degrees == 200000) {
 			/*if (Angle < -interimDegree && Angle >= -90) {
 				place = ONCURVE_BEGIN;
 				status = TURN_RIGHT;
 				Angle = -Angle;
-				//Angle = lineDetect;
+				//Angle = turtle.degrees;
 				break;
 			}
 			else if (Angle > interimDegree && Angle <= 90) {
 				place = ONCURVE_BEGIN;
 				status = TURN_LEFT;
 				Angle = -Angle;
-				//Angle = lineDetect;
+				//Angle = turtle.degrees;
 				break;
 			}
 			else*/
 				status = MOVE_BACKWARD;
 			break;
 		}
-		else if (lineDetect > 250000) {
+		else if (turtle.degrees > 250000) {
 			takeTurn = true;
 			status = STAY;
-			Angle = lineDetect - 300000;
+			Angle = turtle.degrees - 300000;
 			place = ONCURVE_BEGIN;
-			/*if ((lineDetect > -interimDegree && lineDetect < 0) || (lineDetect > 0 && lineDetect < interimDegree)) {
-				Angle = lineDetect;
+			/*if ((turtle.degrees > -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
+				Angle = turtle.degrees;
 				status = STAY;
 				break;
 			}
-			if (lineDetect < -interimDegree && lineDetect >= -90) {
+			if (turtle.degrees < -interimDegree && turtle.degrees >= -90) {
 				status = TURN_LEFT;
-				Angle = lineDetect;
+				Angle = turtle.degrees;
 				break;
 			}
-			else if (lineDetect > interimDegree && lineDetect <= 90) {
+			else if (turtle.degrees > interimDegree && turtle.degrees <= 90) {
 				status = TURN_RIGHT;
-				Angle = lineDetect;
+				Angle = turtle.degrees;
 				break;
 			}*/
 		}

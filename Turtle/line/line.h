@@ -27,8 +27,13 @@ using namespace cv;
 #define T_interimDegree 12.5 //The threshold value to turn when walking on curve 
 #define curveParameter 2.1 // If the last degree is bigger then the first one times this parameter, I judge the robot is on curve
 
+struct Data{
+	double distance = 0;
+	double degrees = 0;
+};
+
 void rgb2bin(Mat& rgb, Mat& bin);
 int biasJudge(Mat& bin);
-double CapLine();
+Data CapLine();
 
 #endif
