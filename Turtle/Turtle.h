@@ -10,22 +10,22 @@
 
 #define sleeptime 0.3
 #define turnTimes 2
-#define turnCoefficient 1.33
+#define turnCoefficient 1.2
 typedef enum {
 	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
-
+/*
 typedef enum {
 	HIGH, LOW, MEDIUM
 }Gesture;
-
+*/
 typedef enum {
 	ONLINE, ONCURVE_BEGIN, ONCURVE_MIDDLE, ONCURVE_END
 }Place;
 
 struct RoboTurtle {
 	Status status = LINE_DETECT;
-	Gesture gesture = MEDIUM;
+	//Gesture gesture = MEDIUM;
 	Place place = ONLINE;
 	bool takeTurn = false;
 	int step_cnt = 0;
@@ -47,24 +47,29 @@ void RoboTurtle::takeAction() {
 			if (place == ONLINE)
 				walkStep += 2;
 			else
-				walkStep += 1;
+				walkStep += 2; // wait for edit!!!!
 			status = MOVE_FORWARD;
 			//break;
 		}
 		else {
-			if (fabs(Angle) < 15) Move_forward();
-			Move_forward();
-			Move_forward();
-			int tt = turnTimes + 1;
+			int tt = turnTimes ;
+			/*if(Angle < 0)
+				Turn_left(-int(Angle/turnTimes));
+			else 
+				Turn_right(int(Angle/turnTimes));*/
+			//Move_forward();
+			//Move_forward();
 			if(Angle < 0)
 				while(tt--)
-					Turn_left(-int(Angle/turnTimes));
+					Turn_left(-int(Angle/turnCoefficient));
 			else 
 				while(tt--)
-					Turn_right(int(Angle/turnTimes));
+					Turn_right(int(Angle/turnCoefficient));
+			Move_forward();
 			Move_forward();
 			Move_forward();
 			takeTurn = false;
+			status = LINE_DETECT;
 			break;
 		}
 		/*case ONCURVE_MIDDLE: {
@@ -77,7 +82,7 @@ void RoboTurtle::takeAction() {
 			place = ONLINE;
 			break;
 		}	 */
-		
+		//status = LINE_DETECT;
 		break;
 	}
 	case MOVE_FORWARD: {
@@ -94,8 +99,7 @@ void RoboTurtle::takeAction() {
 		stay_Middle();
 		cout << "DETECTING_LINE" << endl;
 		turtle = CapLine();
-		double turtle.degrees = turtle.degrees;
-		if ((turtle.degrees < -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
+		if ((turtle.degrees > -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
 			Angle = turtle.degrees;
 			step_cnt++;
 			if(step_cnt > 2){
@@ -196,7 +200,7 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case MOVE_BACKWARD: {
-		cout << "MOVE_BACKWARD";
+		cout << "MOVE_BACKWARD" <<endl;
 		Move_backward();
 		status = LINE_DETECT;
 		break;

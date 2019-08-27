@@ -44,7 +44,8 @@ Data CapLine() {
 	VideoCapture cap(0);
 	if (!cap.isOpened()) {
 		cout << "Camera problem" << endl;
-		return -999;
+		Sam.degrees = -999;
+		return Sam;
 	}
 
 	Mat image, gray, binary, blur_image;
@@ -136,23 +137,29 @@ Data CapLine() {
 		cnt++;*/
 	}
 	Sam.distance = sqrt(pow(x[k-1]-x[0],2)+pow(y[k-1]-y[0],2));
+	double final_degree = atan(-((x[k-1] - x[0]) / (y[k-1] - y[0]))) * 180 / Pi;
 	cout<< "degrees[0] = "<<Degrees[0]<<endl;
 	cout<< "degrees[k-3] = "<<Degrees[k-3]<<endl;
+	cout<< "degrees = " << Sam.degrees <<endl;
 	cout<< "distance = " << Sam.distance << endl;
-	if ((fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) && fabs(Degrees[0]) > T_interimDegree) onCurve = true;
+	if ((fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) && fabs(final_degree) > T_interimDegree) onCurve = true;
 	imshow("gray", gray);
 	//imshow("binary", binary);
 	waitKey(33);
-	//waitKey(0);
+	
 	if (judge == 1)
 		Sam.degrees = 199909; //
 	else if (judge == -1)
 		Sam.degrees = 200012;
 	else if (judge == 3)
 		Sam.degrees = 200000;
-
-	if (onCurve)
-		Sam.degrees = Degrees[k-2]  + 300000;
+	if(Sam.degrees >100000)
+		return Sam;
+	if (onCurve){
+		Sam.degrees = final_degree +300000.0;
+		cout<< "finnal degrees = " <<Sam.degrees - 300000<<endl;
+	}
+	//waitKey(0);
 	return Sam;
 }
 

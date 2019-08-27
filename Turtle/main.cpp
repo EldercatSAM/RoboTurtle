@@ -1,6 +1,6 @@
 //#pragma once
 #include "/home/pi/RoboTurtle/Turtle/Turtle.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 /*
 cd RoboTurtle/Turtle
@@ -13,6 +13,7 @@ int main() {
 	while (1) {
 		Sam.takeAction();
 	}
+	
 /*
 	int i=9;
 	while (1) {
