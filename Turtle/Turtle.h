@@ -121,15 +121,8 @@ void RoboTurtle::takeAction() {
 			Angle = turtle.degrees;
 			break;
 		}
-		else if (turtle.degrees == 199909) {
-			status = MOVE_RIGHT;
-			break;
-		}
-		else if (turtle.degrees == 200012) {
-			status = MOVE_LEFT;
-			break;
-		}
-		else if (turtle.degrees == 200000) {
+		else if (turtle.degrees > 100000 && turtle.degrees < 250000) {
+			if (turtle.degrees == 200000) {
 			/*if (Angle < -interimDegree && Angle >= -90) {
 				place = ONCURVE_BEGIN;
 				status = TURN_RIGHT;
@@ -146,6 +139,13 @@ void RoboTurtle::takeAction() {
 			}
 			else*/
 				status = MOVE_BACKWARD;
+			}
+			else 
+				turtle.degrees -= 200000;
+			if(turtle.degrees > 0)
+				status = MOVE_RIGHT;
+			else
+				status = MOVE_LEFT;
 			break;
 		}
 		else if (turtle.degrees > 250000) {
@@ -173,13 +173,13 @@ void RoboTurtle::takeAction() {
 	}
 	case MOVE_RIGHT: {
 		cout << "MOVE_RIGHT" << endl;
-		Move_right();
+		Move_right(turtle.distance);
 		status = LINE_DETECT;
 		break;
 	}
 	case MOVE_LEFT: {
 		cout << "MOVE_LEFT" << endl;
-		Move_left();
+		Move_left(turtle.distance);
 		status = LINE_DETECT;
 		break;
 	}
