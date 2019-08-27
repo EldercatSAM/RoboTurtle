@@ -10,7 +10,7 @@
 
 #define sleeptime 0.3
 #define turnTimes 2
-#define turnCoefficient 1.2
+#define turnCoefficient 1.1
 typedef enum {
 	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
@@ -53,6 +53,7 @@ void RoboTurtle::takeAction() {
 		}
 		else {
 			int tt = turnTimes ;
+			if(fabs(Angle)>40) tt+=1;
 			/*if(Angle < 0)
 				Turn_left(-int(Angle/turnTimes));
 			else 
@@ -139,6 +140,7 @@ void RoboTurtle::takeAction() {
 			}
 			else*/
 				status = MOVE_BACKWARD;
+				break;
 			}
 			else 
 				turtle.degrees -= 200000;
@@ -172,14 +174,14 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case MOVE_RIGHT: {
-		cout << "MOVE_RIGHT" << endl;
-		Move_right(turtle.distance);
+		cout << "MOVE_RIGHT" << turtle.degrees<<" INDEXS"<<endl;
+		Move_right(turtle.degrees);
 		status = LINE_DETECT;
 		break;
 	}
 	case MOVE_LEFT: {
-		cout << "MOVE_LEFT" << endl;
-		Move_left(turtle.distance);
+		cout << "MOVE_LEFT" << turtle.degrees<<" INDEXS"<<endl;
+		Move_left(-turtle.degrees);
 		status = LINE_DETECT;
 		break;
 	}

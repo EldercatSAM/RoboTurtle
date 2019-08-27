@@ -4,7 +4,7 @@
 
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
-#define walkCoefficient 2
+#define walkCoefficient 1.85
 
 void Move_forward();
 void Move_left(int dis);

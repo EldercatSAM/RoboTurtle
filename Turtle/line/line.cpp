@@ -24,16 +24,11 @@ int biasJudge(Mat& bin) {
 		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255 || bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
 			return 0;
 	}
+	for (int j=rowNumber ; j>0 ; j-=30 )
 	for (int i = biasDistance; i <= colNumber; i++) {
-		if (bin.at<uchar>(rowNumber, colNumber / 2 + i ) == 255)
+		if (bin.at<uchar>(j, colNumber / 2 + i ) == 255)
 			return i;
-		if (bin.at<uchar>(rowNumber, colNumber / 2 - i ) == 255)
-			return -i;
-	}
-	for (int i = biasDistance; i <= colNumber; i++) {
-		if (bin.at<uchar>(rowNumber / 2, colNumber / 2 + i ) == 255)
-			return i;
-		if (bin.at<uchar>(rowNumber / 2, colNumber / 2 - i ) == 255)
+		if (bin.at<uchar>(j, colNumber / 2 - i ) == 255)
 			return -i;
 	}
 	return 999;//Can't find a red line in the field
@@ -44,8 +39,9 @@ Data CapLine() {
 	VideoCapture cap(0);
 	if (!cap.isOpened()) {
 		cout << "Camera problem" << endl;
-		return -999;
+		Sam.degrees = -999;return Sam;
 	}
+	
 
 	Mat image, gray, binary, blur_image;
 	Mat ROI[N];
@@ -125,8 +121,8 @@ Data CapLine() {
 	for (int i = 0; i < k - 1; i++) {
 		double currentdegree = atan(-((x[i + 1] - x[i]) / (y[i + 1] - y[i]))) * 180 / Pi;
 		Degrees[i] = currentdegree;
-		if(i < (k-1)/2)
-			Sam.degrees += currentdegree / (k-1) *2;
+		//if(i < (k-1)/)
+			Sam.degrees += currentdegree / (k-1);
 		/*if (cnt == 1 && Sam.degrees * currentdegree < 0) { //the first three points lean on different side
 			Sam.degrees = 0;
 			cnt--;
@@ -139,20 +135,27 @@ Data CapLine() {
 	cout<< "degrees[0] = "<<Degrees[0]<<endl;
 	cout<< "degrees[k-3] = "<<Degrees[k-3]<<endl;
 	cout<< "distance = " << Sam.distance << endl;
-	if ((fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) && fabs(Degrees[0]) > T_interimDegree) onCurve = true;
+	cout<< "degrees = " <<Sam.degrees<<endl;
+	
+	double final_degree = atan(-((x[k - 1] - x[0]) / (y[k - 1] - y[0]))) * 180 / Pi;
+	cout<< "final degree = "<<final_degree<<endl;
+	if (fabs(final_degree) > T_interimDegree) onCurve = true;
+	//(fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) 
 	imshow("gray", gray);
 	//imshow("binary", binary);
 	waitKey(33);
 	//waitKey(0);
 	if (judge != 0){
+		cout<< "bias = " << judge <<endl;
 		if (judge == 999)
 			Sam.degrees = 200000;
 		else
 			Sam.degrees = 200000 + judge;
 		return Sam; 
 	}
-	if (onCurve)
-		Sam.degrees = Degrees[k-2]  + 300000;
+	if (onCurve){
+		Sam.degrees = final_degree  + 300000;
+	}
 	return Sam;
 }
 

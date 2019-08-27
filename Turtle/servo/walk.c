@@ -31,16 +31,17 @@ void Move_left(int dis){
 		1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
 		1500,1600,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500};
 		
-	for(int i=0;i<3;i++)
+	for(int i=0;i<3;i++){
 		b[4+i][2] -= walkCoefficient * dis;
 		b[i][8]   += walkCoefficient * dis;
+	}
 	for(int i=0;i<2;i++){
 		b[7-i][5] += walkCoefficient * dis;
 		b[2+i][11]-= walkCoefficient * dis;
 	}
 	
 	for (int i=0;i<ML_steps;i++)
-		action(ti[i]/200*dis*walkCoefficient,b[i]);
+		action(ti[i]/1.8,b[i]);
 }
 
 void Move_right(int dis){
@@ -56,16 +57,17 @@ void Move_right(int dis){
 		1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
 		1500,2000,1500,1500,1400,1500,1500,1000,1500,1500,2000,1500};
 	
-	for(int i=0;i<3;i++)
+	for(int i=0;i<3;i++){
 		b[4+i][5] += walkCoefficient * dis;
 		b[i][11]  -= walkCoefficient * dis;
+	}
 	for(int i=0;i<2;i++){
 		b[7-i][2] -= walkCoefficient * dis;
 		b[2+i][8] += walkCoefficient * dis;
 	}
 	
 	for (int i=0;i<MR_steps;i++)
-		action(ti[i]/200*dis*walkCoefficient,b[i]);
+		action(ti[i]/1.8,b[i]);
 }
 
 void Move_backward(){
