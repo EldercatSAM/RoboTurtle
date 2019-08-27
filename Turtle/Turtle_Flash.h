@@ -1,12 +1,10 @@
 #pragma once
-#ifndef TURTLE_H
-#define TURTLE_H
+#ifndef TURTLE_FLASH_H
+#define TURTLE_FLASH_H
 
 #include "/home/pi/RoboTurtle/Turtle/servo/walk.c"
 #include "/home/pi/RoboTurtle/Turtle/servo/turn.c"
-#include "/home/pi/RoboTurtle/Turtle/servo/cross_country.c"
 #include "/home/pi/RoboTurtle/Turtle/line/line.cpp"
-#include "/home/pi/RoboTurtle/Turtle/ultrasonic/ultrasonic.c"
 
 #define sleeptime 0.3
 #define turnTimes 2
