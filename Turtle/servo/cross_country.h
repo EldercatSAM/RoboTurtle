@@ -6,5 +6,6 @@
 
 void Up_platform();
 void Down_platform();
+void Up_stairs();
 
 #endif
