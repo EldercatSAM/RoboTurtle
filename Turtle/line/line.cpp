@@ -144,7 +144,7 @@ Data CapLine() {
 	imshow("gray", gray);
 	//imshow("binary", binary);
 	waitKey(33);
-	//waitKey(0);
+	waitKey(0);
 	if (judge != 0){
 		cout<< "bias = " << judge <<endl;
 		if (judge == 999)
