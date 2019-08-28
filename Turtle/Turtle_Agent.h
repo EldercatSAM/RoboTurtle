@@ -113,6 +113,11 @@ void RoboTurtle::takeAction() {
 	}
 	case MOVE_FORWARD: {
 		Distance = disMeasure(); 
+		if (Distance < 30){
+			cout<< "UP_PLATFORM"<<endl;
+			upPlatform();
+			waitKey(0); 
+		} 
 		cout << "MOVE_FORWARD" << endl;
 		cout << walkStep <<endl;
 		while (walkStep>0){
