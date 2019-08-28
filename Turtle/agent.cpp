@@ -2,11 +2,12 @@
 
 /*
 cd RoboTurtle/Turtle
-g++ -o main main.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
+g++ -o agent agent.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 */
 int main() {
 	pca9685 = pca9685_init(0x40);
+	ultraInit(); 
 	RoboTurtle Sam;
 	while (1) {
 		Sam.takeAction();

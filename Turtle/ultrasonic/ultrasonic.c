@@ -42,6 +42,7 @@ float disMeasure(void)
     stop  = tv2.tv_sec * 1000000 + tv2.tv_usec;  
   
     dis = (float)(stop - start) / 1000000 * 34000 / 2;  //计算时间差求出距离  
+    printf("distance = %0.2f cm\n",dis);
   
     return dis;  
 }  

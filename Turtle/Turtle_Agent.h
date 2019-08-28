@@ -88,6 +88,7 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case MOVE_FORWARD: {
+		Distance = disMeasure(); 
 		cout << "MOVE_FORWARD" << endl;
 		cout << walkStep <<endl;
 		while (walkStep>0){
