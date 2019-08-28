@@ -16,15 +16,9 @@ int main(){
     }  
 	ultraInit(); 
 	pca9685 = pca9685_init(0x40);
+	RoboTurtle sam;
 	//Move_forward();
-	
-	
-	stay_Middle();
-	while(1)
-		Move_forward();
-	//Up_stairs();
-	sleep(2);
-	//adjust();
+	sam.upPlatform();
 	return 0;
 }
 

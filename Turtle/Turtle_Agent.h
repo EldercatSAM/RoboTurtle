@@ -11,6 +11,7 @@
 #define sleeptime 0.3
 #define turnTimes 2
 #define turnCoefficient 1.1
+#define UpDistance 45
 typedef enum {
 	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
@@ -41,6 +42,7 @@ struct RoboTurtle {
 void RoboTurtle::upPlatform(){
 	stay_Middle();
 	sleep(1);
+	Move_forward();
 	Move_forward();
 	Move_forward();
 	stay_Middle();
@@ -112,8 +114,9 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case MOVE_FORWARD: {
+		stay_Middle();
 		Distance = disMeasure(); 
-		if (Distance < 30){
+		if (Distance < UpDistance){
 			cout<< "UP_PLATFORM"<<endl;
 			upPlatform();
 			waitKey(0); 
