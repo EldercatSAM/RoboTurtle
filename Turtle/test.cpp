@@ -20,10 +20,9 @@ int main(){
 	
 	
 	stay_Middle();
-	sleep(3);
-	Down_platform();
-	sleep(1);
-	stay_Middle();
+	while(1)
+		Move_forward();
+	//Up_stairs();
 	sleep(2);
 	//adjust();
 	return 0;
