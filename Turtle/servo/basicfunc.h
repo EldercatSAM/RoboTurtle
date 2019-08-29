@@ -36,6 +36,15 @@ void adjust(){
 }
 
 void stay_Middle(){
+	int x[12]={1000,2000,1500,2000,1000,1500,2000,1000,1500,1000,2000,1500};
+	int ti = 100;
+	action(ti,x);
+	for(int i=0; i<ServoNum; i++){//更新末位置 
+		servos[i] = x[i];
+	}
+}
+
+void stay_Middle_stage(){
 	int x[12]={1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500};
 	int ti = 100;
 	action(ti,x);

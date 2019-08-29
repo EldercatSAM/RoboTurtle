@@ -12,9 +12,10 @@
 #define turnTimes 2
 #define turnCoefficient 1.1
 #define UpDistance 45
-#define initialSteps 15
+#define initialSteps 7 
 #define StairDistance 1500
-#define StairSteps 6
+#define StairSteps 24 
+#define PlatformSteps 4
 typedef enum {
 	INITIALIZE,STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
@@ -28,7 +29,7 @@ typedef enum {
 }Place;
 
 typedef enum{
-	INITIAL,STAGE, PLATFORM, SLOPE
+	INITIAL,STAGE, PLATFORM, ONPLATFORM,SLOPE
 }Stage; 
 struct RoboTurtle {
 	Status status = INITIALIZE;
@@ -135,12 +136,19 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case MOVE_FORWARD: {
-		stay_Middle();
+		switch(stage){
+			case STAGE:
+				stay_Middle_stage();
+				break;
+			default:
+				stay_Middle();
+		}
 		Distance = disMeasure(); 
-		if (Distance < UpDistance){
+		if (Distance < UpDistance&& stage == PLATFORM) {
 			cout<< "UP_PLATFORM"<<endl;
 			upPlatform();
-			waitKey(0); 
+			stage = ONPLATFORM;
+			step_cnt = 0;
 		} 
 		cout << "MOVE_FORWARD" << endl;
 		cout << walkStep <<endl;
@@ -148,8 +156,17 @@ void RoboTurtle::takeAction() {
 		case STAGE:{
 			Up_stairs();
 			step_cnt++;
-			if(step_cnt>StairSteps)
+			if(step_cnt>StairSteps && stage = INITIAL)
 				stage = PLATFORM;
+			break;
+		}
+		case ONPLATFORM:{
+			Move_forward(200);
+			step_cnt++;
+			if(step_cnt == PlatformSteps ){
+				Down_platform();
+				stage = PLATFORM;
+			}
 			break;
 		}
 		default:{
@@ -167,7 +184,13 @@ void RoboTurtle::takeAction() {
 		break;
 	}
 	case LINE_DETECT: {
-		stay_Middle();
+		switch(stage){
+			case STAGE:
+				stay_Middle_stage();
+				break;
+			default:
+				stay_Middle();
+		}
 		cout << "DETECTING_LINE" << endl;
 		turtle = CapLine();
 		if ((turtle.degrees > -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
@@ -240,13 +263,25 @@ void RoboTurtle::takeAction() {
 	}
 	case MOVE_RIGHT: {
 		cout << "MOVE_RIGHT" << turtle.degrees<<" INDEXS"<<endl;
-		Move_right(turtle.degrees);
+		switch(stage){
+			case STAGE:
+				Move_right_stage(turtle.degrees);
+				break;
+			default:
+				Move_right(turtle.degrees);//stay_Middle();
+		}
 		status = LINE_DETECT;
 		break;
 	}
 	case MOVE_LEFT: {
 		cout << "MOVE_LEFT" << turtle.degrees<<" INDEXS"<<endl;
-		Move_left(-turtle.degrees);
+		switch(stage){
+			case STAGE:
+				Move_left_stage(-turtle.degrees);
+				break;
+			default:
+				Move_left(-turtle.degrees);
+		}
 		status = LINE_DETECT;
 		break;
 	}
