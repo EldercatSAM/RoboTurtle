@@ -2,7 +2,7 @@
 
 /*
 cd RoboTurtle/Turtle
-g++ -o test test.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
+g++ -o moveright test.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
 ./test
 
 cd RoboTurtle/Turtle
@@ -17,8 +17,7 @@ int main(){
 	ultraInit(); 
 	pca9685 = pca9685_init(0x40);
 	RoboTurtle sam;
-	//Move_forward();
-	sam.upPlatform();
+	Move_right(100);
 	return 0;
 }
 
