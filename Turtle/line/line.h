@@ -23,7 +23,7 @@ using namespace cv;
 #define biasDistance 120 //Consider how long as off-center
 #define SearchFactor 0.4 //Range of line-searching
 #define boarderWidth 20 //Search the line from coordination above this value
-#define interimDegree 23 //The threshold value to turn when walking on line 
+#define interimDegree 19 //The threshold value to turn when walking on line 
 #define T_interimDegree 27 //The threshold value to turn when walking on curve 
 #define curveParameter 2.1 // If the last degree is bigger then the first one times this parameter, I judge the robot is on curve
 
@@ -35,5 +35,7 @@ struct Data{
 void rgb2bin(Mat& rgb, Mat& bin);
 int biasJudge(Mat& bin);
 Data CapLine();
+
+
 
 #endif

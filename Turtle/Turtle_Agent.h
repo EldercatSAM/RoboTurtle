@@ -13,7 +13,7 @@
 #define turnCoefficient 1.1
 #define UpDistance 45
 typedef enum {
-	STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
+	INITIALIZE,STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
 /*
 typedef enum {
@@ -25,7 +25,7 @@ typedef enum {
 }Place;
 
 struct RoboTurtle {
-	Status status = LINE_DETECT;
+	Status status = INITIALIZE;
 	//Gesture gesture = MEDIUM;
 	Place place = ONLINE;
 	bool takeTurn = false;
@@ -65,6 +65,13 @@ void RoboTurtle::upPlatform(){
 
 void RoboTurtle::takeAction() {
 	switch (status) {
+	case INITIALIZE:{
+		turtle = CapLine();
+		if(turtle.degrees > 0) Turn_right(int(turtle.degrees));
+		else Turn_left(int(-turtle.degrees));
+		status = LINE_DETECT;
+		break;
+	}
 	case STAY: {
 		//stay_Middle();
 		
