@@ -1,4 +1,5 @@
 #include "/home/pi/RoboTurtle/Turtle/line/line.h"
+#include <time.h>
 
 void rgb2bin(Mat& rgb, Mat& bin) {
 	cvtColor(rgb, bin, CV_BGR2GRAY);
@@ -35,6 +36,8 @@ int biasJudge(Mat& bin) {
 }
 
 Data CapLine() {
+	clock_t start = clock();
+ 
 	Data Sam;
 	VideoCapture cap(0);
 	if (!cap.isOpened()) {
@@ -145,6 +148,9 @@ Data CapLine() {
 	imshow("binary", binary);
 	waitKey(33);
 	waitKey(0);
+    clock_t finish = clock();
+    double consumeTime = (double)(finish-start)/CLOCKS_PER_SEC;
+    cout<<consumeTime<<"s"<<endl;
 	if (judge != 0&& (fabs(Sam.degrees) < interimDegree || fabs(judge) > 150)){
 		cout<< "bias = " << judge <<endl;
 		if (judge == 999)
