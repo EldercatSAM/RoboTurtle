@@ -20,7 +20,7 @@ int main(){
 	int i;
 	cin>>i;
 	while(i--)
-	Up_stairs();
+		Move_forward(200);
 	return 0;
 }
 

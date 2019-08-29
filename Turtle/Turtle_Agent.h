@@ -12,6 +12,9 @@
 #define turnTimes 2
 #define turnCoefficient 1.1
 #define UpDistance 45
+#define initialSteps 15
+#define StairDistance 1500
+#define StairSteps 6
 typedef enum {
 	INITIALIZE,STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
@@ -37,14 +40,16 @@ struct RoboTurtle {
 	float Distance = 0;
 	void upPlatform();
 	void takeAction();
+	void upStairs();
 };
 
 void RoboTurtle::upPlatform(){
 	stay_Middle();
 	sleep(1);
-	Move_forward();
-	Move_forward();
-	Move_forward();
+	Move_forward(100);
+	Move_forward(100);
+	Move_forward(100);
+	Move_right(50);
 	stay_Middle();
 	//sleep(3);
 	Stand_up();
@@ -63,12 +68,21 @@ void RoboTurtle::upPlatform(){
 	Up_platform();
 }
 
+void RoboTurtle::upStairs(){
+	int i = initialSteps;
+	while (i--)
+		Move_forward(200);
+	i = StairSteps;
+	while(i--)
+	Up_stairs();	
+}
 void RoboTurtle::takeAction() {
 	switch (status) {
 	case INITIALIZE:{
 		turtle = CapLine();
 		if(turtle.degrees > 0) Turn_right(int(turtle.degrees));
 		else Turn_left(int(-turtle.degrees));
+		upStairs();
 		status = LINE_DETECT;
 		break;
 	}
@@ -100,9 +114,7 @@ void RoboTurtle::takeAction() {
 			else 
 				while(tt--)
 					Turn_right(int(Angle/turnCoefficient));
-			Move_forward();
-			Move_forward();
-			Move_forward();
+			Move_forward(turtle.distance);
 			takeTurn = false;
 			status = LINE_DETECT;
 			break;
@@ -130,10 +142,7 @@ void RoboTurtle::takeAction() {
 		} 
 		cout << "MOVE_FORWARD" << endl;
 		cout << walkStep <<endl;
-		while (walkStep>0){
-			Move_forward();
-			walkStep--;
-		}
+		Move_forward(turtle.distance);
 		status = LINE_DETECT;
 		break;
 	}

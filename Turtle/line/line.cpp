@@ -66,7 +66,7 @@ Data CapLine() {
 	Mat element2 = getStructuringElement(MORPH_RECT, Size(Close_size,Close_size));
 	dilate(binary, binary, element2);//膨胀
 	erode(binary, binary, element2);
-	imshow("binary", binary);
+	//imshow("binary", binary);
 	judge = biasJudge(binary);
 	Rect rec[N];
 	Point2f diff[N];
@@ -142,10 +142,10 @@ Data CapLine() {
 	if (fabs(final_degree) > T_interimDegree) onCurve = true;
 	//(fabs(Degrees[k - 3])+fabs(Degrees[k-2])) > curveParameter * (fabs(Degrees[0])+fabs(Degrees[1])) 
 	imshow("gray", gray);
-	//imshow("binary", binary);
+	imshow("binary", binary);
 	waitKey(33);
 	waitKey(0);
-	if (judge != 0){
+	if (judge != 0&& (fabs(Sam.degrees) < interimDegree || fabs(judge) > 150)){
 		cout<< "bias = " << judge <<endl;
 		if (judge == 999)
 			Sam.degrees = 200000;
@@ -153,7 +153,7 @@ Data CapLine() {
 			Sam.degrees = 200000 + judge;
 		return Sam; 
 	}
-	if (onCurve){
+	if (onCurve ){
 		Sam.degrees = final_degree  + 300000;
 	}
 	return Sam;
