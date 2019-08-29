@@ -9,7 +9,7 @@ void rgb2bin(Mat& rgb, Mat& bin) {
 	{
 		for (int j = 0; j < colNumber; j++)//ап
 		{
-			if (rgb.at<Vec3b>(i, j)[2] * ColorParameter > (rgb.at<Vec3b>(i, j)[0] + rgb.at<Vec3b>(i, j)[1]))
+			if (rgb.at<Vec3b>(i, j)[2] > (rgb.at<Vec3b>(i, j)[0] + rgb.at<Vec3b>(i, j)[1])* ColorParameter )
 				bin.at<uchar>(i, j) = 255;//Red
 			else
 				bin.at<uchar>(i, j) = 0;
