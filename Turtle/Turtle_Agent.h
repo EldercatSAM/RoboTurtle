@@ -27,10 +27,15 @@ typedef enum {
 	ONLINE, ONCURVE_BEGIN, ONCURVE_MIDDLE, ONCURVE_END
 }Place;
 
+typedef enum{
+	INITIAL,STAGE, PLATFORM, SLOPE
+}Stage; 
 struct RoboTurtle {
 	Status status = INITIALIZE;
 	//Gesture gesture = MEDIUM;
 	Place place = ONLINE;
+	Stage stage = INITIAL;
+	
 	bool takeTurn = false;
 	int step_cnt = 0;
 	Data turtle;
@@ -72,9 +77,6 @@ void RoboTurtle::upStairs(){
 	int i = initialSteps;
 	while (i--)
 		Move_forward(200);
-	i = StairSteps;
-	while(i--)
-	Up_stairs();	
 }
 void RoboTurtle::takeAction() {
 	switch (status) {
@@ -82,7 +84,7 @@ void RoboTurtle::takeAction() {
 		turtle = CapLine();
 		if(turtle.degrees > 0) Turn_right(int(turtle.degrees));
 		else Turn_left(int(-turtle.degrees));
-		upStairs();
+		//upStairs();
 		status = LINE_DETECT;
 		break;
 	}
@@ -142,7 +144,25 @@ void RoboTurtle::takeAction() {
 		} 
 		cout << "MOVE_FORWARD" << endl;
 		cout << walkStep <<endl;
-		Move_forward(turtle.distance);
+		switch(stage):{
+		case STAGE:{
+			Up_stairs();
+			step_cnt++;
+			if(step_cnt>StairSteps)
+				stage = PLATFORM;
+			break;
+		}
+		default:{
+			Move_forward(turtle.distance);
+			step_cnt++;
+			if(step_cnt>initialSteps && stage == INITIAL)
+				stage = STAGE;
+			break;
+		}
+		//status = LINE_DETECT;
+		}
+		
+		
 		status = LINE_DETECT;
 		break;
 	}
@@ -152,11 +172,6 @@ void RoboTurtle::takeAction() {
 		turtle = CapLine();
 		if ((turtle.degrees > -interimDegree && turtle.degrees < 0) || (turtle.degrees > 0 && turtle.degrees < interimDegree)) {
 			Angle = turtle.degrees;
-			step_cnt++;
-			if(step_cnt > 2){
-				place = ONLINE;
-				step_cnt = 0;
-			}
 			status = STAY;
 			break;
 		}

@@ -97,7 +97,7 @@ void Move_left(int dis){
 	}
 	
 	for (int i=0;i<ML_steps;i++)
-		action(ti[i]/1.8,b[i]);
+		action(ti[i]/2.5,b[i]);
 }
 
 void Move_right(int dis){
@@ -123,7 +123,7 @@ void Move_right(int dis){
 	}
 	
 	for (int i=0;i<MR_steps;i++)
-		action(ti[i]/1.8,b[i]);
+		action(ti[i]/2.5,b[i]);
 }
 
 void Move_backward(){
