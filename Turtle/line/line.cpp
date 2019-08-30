@@ -147,7 +147,7 @@ Data CapLine() {
 	imshow("gray", gray);
 	imshow("binary", binary);
 	waitKey(33);
-	waitKey(0);
+	//waitKey(0);
     clock_t finish = clock();
     double consumeTime = (double)(finish-start)/CLOCKS_PER_SEC;
     cout<<consumeTime<<"s"<<endl;

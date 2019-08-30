@@ -1,7 +1,7 @@
 #pragma once
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
-#define rotate_parameter 18
+#define rotate_parameter 20
 #define correct_degree -2
 //When this parameter is 16.5 ,it act like a dumb donkey, why so?
 //This parameter decides the mapping between degree and the servo value.

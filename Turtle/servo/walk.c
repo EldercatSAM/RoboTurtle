@@ -16,7 +16,10 @@ void Move_forward(int dis){
 	 for(int i = 0;i<WalkSteps;i++){
 		 
 	 }
-	if(dis < MinStep ) return ;
+	if(dis < MinStep ) {
+		Move_forward(100);
+		return;
+	}
 	if(dis > MaxStep ){
 		Move_forward ( MaxStep);
 		Move_forward ( dis - MaxStep);

@@ -19,8 +19,8 @@ using namespace cv;
 #define Open_size 12 // Rect size of open operate
 #define Close_size 8 // Rect size of close operate
 #define Pi 3.14159
-#define ColorParameter 1.2 // Threshold for RED
-#define biasDistance 120 //Consider how long as off-center
+#define ColorParameter 1.0 // Threshold for RED
+#define biasDistance 80 //Consider how long as off-center
 #define SearchFactor 0.4 //Range of line-searching
 #define boarderWidth 20 //Search the line from coordination above this value
 #define interimDegree 18 //The threshold value to turn when walking on line 
