@@ -6,7 +6,7 @@
 #include "/home/pi/RoboTurtle/Turtle/servo/pca9685_wiringpi.h"
 #define steptime 15
 
-const int Deviation[ServoNum] = {-100,-75,-50,-40,-40,-45,-90,-100,-30,-50,-50,-90};//舵机误差 
+const int Deviation[ServoNum] = {-150,-80,-50,-40,-40,-45,-40,-100,-30,-50,-50,-90};//舵机误差 
 int servos[ServoNum] = {1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500};//存储舵机位置，初始化为归中 
 
 void action(int Action_time,const int *Moves){

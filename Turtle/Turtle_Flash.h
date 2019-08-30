@@ -8,12 +8,13 @@
 
 #define sleeptime 0.3
 #define turnTimes 2
-#define turnCoefficient 1.1
+#define turnCoefficient 1.3
 #define UpDistance 45
 #define initialSteps 4
 #define StairDistance 1500
 #define StairSteps 21
 #define PlatformSteps 8
+#define twiceDegree 26
 typedef enum {
 	INITIALIZE,STAY, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT, LINE_DETECT
 }Status;
@@ -61,12 +62,20 @@ void RoboTurtle::takeAction() {
 			
 			//Move_forward();
 			//Move_forward();
+			if(fabs(Angle) > twiceDegree){
 			if(Angle < 0)
 				while(tt--)
 					Turn_left_stage(-int(Angle/turnCoefficient));
 			else 
 				while(tt--)
 					Turn_right_stage(int(Angle/turnCoefficient));
+			}
+			else {
+				if(Angle < 0)
+					Turn_left_stage(-int(Angle*turnCoefficient));
+				else 
+					Turn_right_stage(int(Angle*turnCoefficient));
+			}
 			Move_forward_stage(turtle.distance);
 			takeTurn = false;
 			status = LINE_DETECT;

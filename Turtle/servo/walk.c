@@ -33,7 +33,7 @@ void Move_forward(int dis){
 	b[3][5] -= dis *moveStep;
 	
 	for (int i=0;i<WalkSteps;i++){
-		action(ti[i]*0.75,b[i]);
+		action(ti[i]*0.5,b[i]);
 	}
 	
 }
@@ -187,7 +187,7 @@ void Move_right(int dis){
 	}
 	
 	for (int i=0;i<MR_steps;i++)
-		action(ti[i]/2.5,b[i]);
+		action(ti[i]/4,b[i]);
 }
 void Move_right_stage(int dis){
     #define MRS_steps 8
@@ -212,7 +212,7 @@ void Move_right_stage(int dis){
 	}
 	
 	for (int i=0;i<MRS_steps;i++)
-		action(ti[i]/2.5,b[i]);
+		action(ti[i]/4,b[i]);
 }
 
 void Move_backward(){

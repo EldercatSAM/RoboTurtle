@@ -4,8 +4,8 @@
 
 #include "/home/pi/RoboTurtle/Turtle/servo/basicfunc.h"
 
-#define walkCoefficient 1.85
-#define moveStep 3.75
+#define walkCoefficient 1.95
+#define moveStep 3.8
 #define MinStep 50
 #define MaxStep 250
 
