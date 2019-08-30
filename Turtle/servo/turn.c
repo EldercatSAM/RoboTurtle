@@ -49,7 +49,7 @@ void Turn_right_stage(int degree){
 	Moves[2][11]-=rotate_parameter*degree;
 
 	for (int i=0;i<TRS_Steps;i++) 
-		action(ti[i],Moves[i]);
+		action(ti[i]*1.2,Moves[i]);
 }
 
 void Turn_left(int degree) {
@@ -102,5 +102,5 @@ void Turn_left_stage(int degree) {
 	Moves[6][11] += rotate_parameter * degree;
 
 	for (int i = 0; i < TLS_Steps; i++) 
-		action(ti[i], Moves[i]);
+		action(ti[i]*1.2, Moves[i]);
 }

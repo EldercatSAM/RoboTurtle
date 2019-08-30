@@ -4,7 +4,7 @@
 
 /*
 cd RoboTurtle/Turtle
-g++ -o main main.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
+g++ -o flash flash.cpp `pkg-config --cflags --libs opencv` -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 */
 int main() {

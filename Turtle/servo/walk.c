@@ -13,11 +13,8 @@ void Move_forward(int dis){
 	 1000,2000,1500,2000,1000,1500,2000,1000,1500,1000,2000,1500,
 	 1000,1600,1500,2000,1000,1500,2000,1000,1500,1000,2000,1500};
 	 //1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500};
-	 for(int i = 0;i<WalkSteps;i++){
-		 
-	 }
 	if(dis < MinStep ) {
-		Move_forward(100);
+		Move_forward(130);
 		return;
 	}
 	if(dis > MaxStep ){
@@ -36,6 +33,44 @@ void Move_forward(int dis){
 	b[3][5] -= dis *moveStep;
 	
 	for (int i=0;i<WalkSteps;i++){
+		action(ti[i]*0.75,b[i]);
+	}
+	
+}
+
+void Move_forward_stage(int dis){
+	#define SWalkSteps 8
+	int ti[SWalkSteps] = {150,50,150,50,150,50,150,50};
+	int b[SWalkSteps][ServoNum] = {
+	 1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
+	 1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,1600,1500,
+	 1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
+	 1500,2000,1500,1500,1400,1500,1500,1000,1500,1500,2000,1500,
+	 1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
+	 1500,2000,1500,1500,1000,1500,1500,1400,1500,1500,2000,1500,
+	 1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500,
+	 1500,1600,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500};
+	 //1500,2000,1500,1500,1000,1500,1500,1000,1500,1500,2000,1500};
+	if(dis < MinStep ) {
+		Move_forward_stage(100);
+		return;
+	}
+	if(dis > MaxStep ){
+		Move_forward_stage ( MaxStep);
+		Move_forward_stage ( dis - MaxStep);
+		return;
+	}
+	for (int i = 1;i<=2;i++){
+		b[3+i][2] += dis * moveStep;
+		b[i][5] -= dis * moveStep;
+		b[8-i][8] -= dis * moveStep;
+		b[1+i][11] += dis * moveStep;
+	}
+	b[6][2] += dis *moveStep;
+	b[0][5] -= dis *moveStep;
+	b[3][5] -= dis *moveStep;
+	
+	for (int i=0;i<SWalkSteps;i++){
 		action(ti[i]*0.75,b[i]);
 	}
 	
